@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Groundwater Project — Beginner's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F0F7FF;--card:#fff;--blue:#2563EB;--blue-lt:#DBEAFE;--green:#16A34A;--green-lt:#DCFCE7;--orange:#EA580C;--orange-lt:#FFF1E6;--purple:#7C3AED;--purple-lt:#EDE9FE;--red:#DC2626;--red-lt:#FEE2E2;--yellow:#D97706;--yellow-lt:#FEF3C7;--teal:#0891B2;--teal-lt:#CFFAFE;--text:#1E293B;--text2:#475569;--border:#E2E8F0;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font-size:16px;line-height:1.6;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1E3A5F,#2563EB 60%,#0891B2);padding:60px 40px 50px;text-align:center;position:relative;overflow:hidden;}
+.hero-emoji{font-size:60px;margin-bottom:16px;display:block;animation:bounce 2s infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero h1{font-size:clamp(26px,5vw,50px);font-weight:900;color:#fff;margin-bottom:14px;}
+.hero p{font-size:17px;color:rgba(255,255,255,0.85);max-width:640px;margin:0 auto 24px;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+.hero-tag{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;border-radius:100px;padding:6px 18px;font-size:14px;font-weight:700;}
+
+/* PLAIN ENGLISH GOAL */
+.goal-box{background:#fff;padding:48px 40px;border-bottom:3px solid var(--blue-lt);text-align:center;}
+.goal-box h2{font-size:26px;font-weight:900;color:var(--blue);margin-bottom:14px;}
+.goal-box p{font-size:17px;color:var(--text2);max-width:760px;margin:0 auto 20px;}
+.goal-highlight{display:inline-block;background:var(--blue-lt);color:var(--blue);border-radius:8px;padding:10px 20px;font-weight:800;font-size:16px;margin-top:6px;}
+
+/* ANALOGY */
+.analogy-wrap{max-width:900px;margin:36px auto;padding:0 24px;}
+.analogy-card{background:var(--yellow-lt);border:2px solid #FDE68A;border-radius:20px;padding:28px 32px;display:flex;gap:20px;align-items:flex-start;}
+.analogy-icon{font-size:44px;flex-shrink:0;}
+.analogy h3{font-size:19px;font-weight:900;color:var(--yellow);margin-bottom:8px;}
+.analogy p{font-size:15px;color:var(--text2);line-height:1.7;}
+
+/* SECTION WRAPPER */
+.section{max-width:960px;margin:0 auto;padding:40px 24px;}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:28px;}
+.sec-num{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:900;color:#fff;flex-shrink:0;}
+.sec-head h2{font-size:24px;font-weight:900;}
+.sec-head p{font-size:14px;color:var(--text2);margin-top:2px;}
+
+/* EXPLAIN CARD */
+.ecard{background:var(--card);border-radius:16px;border:2px solid var(--border);margin-bottom:20px;overflow:hidden;transition:box-shadow .2s,transform .2s;}
+.ecard:hover{box-shadow:0 8px 30px rgba(0,0,0,0.1);transform:translateY(-2px);}
+.ecard-head{display:flex;align-items:center;gap:16px;padding:20px 24px;}
+.ecard-emoji{font-size:32px;flex-shrink:0;}
+.ecard-title{font-size:18px;font-weight:800;}
+.ecard-subtitle{font-size:13px;color:var(--text2);margin-top:2px;}
+.ecard-badge{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;letter-spacing:.5px;flex-shrink:0;text-transform:uppercase;margin-left:auto;}
+.b-must{background:#FEE2E2;color:#DC2626;}
+.b-ext{background:#FFF1E6;color:#EA580C;}
+.b-high{background:#FEF3C7;color:#D97706;}
+.b-med{background:#DBEAFE;color:#2563EB;}
+.ecard-body{padding:0 24px 24px;border-top:1px dashed var(--border);}
+.wwh{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:18px;}
+@media(max-width:640px){.wwh{grid-template-columns:1fr;}}
+.wwh-box{border-radius:12px;padding:16px 18px;}
+.wwh-lbl{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.wwh-txt{font-size:14px;line-height:1.6;color:var(--text2);}
+.bx-what{background:#EFF6FF;border:1px solid #BFDBFE;}.bx-what .wwh-lbl{color:#2563EB;}
+.bx-why{background:#F0FDF4;border:1px solid #BBF7D0;}.bx-why .wwh-lbl{color:#16A34A;}
+.bx-how{background:#FAF5FF;border:1px solid #DDD6FE;}.bx-how .wwh-lbl{color:#7C3AED;}
+
+/* PROCESS STEPS */
+.pstep{display:grid;grid-template-columns:80px 1fr;gap:20px;margin-bottom:32px;align-items:start;}
+@media(max-width:600px){.pstep{grid-template-columns:1fr;}}
+.pnum{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900;color:#fff;flex-shrink:0;}
+.pcard{background:#fff;border-radius:16px;border:2px solid var(--border);padding:24px 28px;}
+.pcard h3{font-size:20px;font-weight:900;margin-bottom:10px;}
+.pcard .plain{font-size:15px;color:var(--text2);margin-bottom:14px;line-height:1.7;}
+.pcard .analogy-inline{background:var(--yellow-lt);border-left:4px solid #FDE68A;border-radius:0 8px 8px 0;padding:12px 16px;font-size:14px;margin-bottom:14px;line-height:1.6;}
+.pcard .analogy-inline strong{color:var(--yellow);}
+.mini-steps{display:flex;flex-direction:column;gap:10px;}
+.mini-step{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--text2);}
+.mini-ico{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:var(--blue-lt);}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;}
+.fstep{background:var(--blue-lt);border:1.5px solid #93C5FD;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;color:var(--blue);}
+.farr{font-size:20px;color:var(--text2);}
+
+/* OUTPUT GRID */
+.out-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;max-width:960px;margin:0 auto;padding:0 24px 48px;}
+.out-card{background:#fff;border-radius:16px;border:2px solid var(--border);padding:24px;text-align:center;}
+.out-icon{font-size:42px;margin-bottom:12px;}
+.out-card h3{font-size:16px;font-weight:800;margin-bottom:8px;}
+.out-card p{font-size:14px;color:var(--text2);line-height:1.6;}
+
+/* GLOSSARY */
+.glossary{background:#1E293B;color:#fff;padding:52px 40px;}
+.glossary h2{font-size:26px;font-weight:900;text-align:center;color:#93C5FD;margin-bottom:6px;}
+.gl-sub{text-align:center;color:#94A3B8;font-size:15px;margin-bottom:32px;}
+.gl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;max-width:960px;margin:0 auto;}
+.gterm{background:#0F172A;border:1px solid #334155;border-radius:12px;padding:16px 20px;}
+.gword{font-family:'Space Mono',monospace;font-size:12px;color:#60A5FA;letter-spacing:.5px;margin-bottom:6px;}
+.gdef{font-size:14px;color:#CBD5E1;line-height:1.6;}
+
+/* DIVIDER */
+hr.div{height:4px;background:linear-gradient(90deg,#2563EB,#0891B2,#16A34A);border:none;margin:0;}
+
+/* FOOTER */
+.footer{background:#0F172A;color:#64748B;text-align:center;padding:24px;font-size:14px;}
+.footer strong{color:#93C5FD;}
+
+/* SECTION DIVIDERS */
+.sec-divider{height:3px;border:none;max-width:960px;margin:0 auto;border-radius:3px;}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-emoji">💧</span>
+  <h1>How Does Our Groundwater Project Work?</h1>
+  <p>A complete beginner's explanation — no technical background needed. We break every data type, every process, and every output into plain everyday language.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">🏙 Bangalore</span>
+    <span class="hero-tag">🌄 Ramanagara</span>
+    <span class="hero-tag">🌾 Mandya</span>
+    <span class="hero-tag">📚 Capstone Batch 6</span>
+  </div>
+</div>
+
+<!-- WHAT ARE WE TRYING TO DO? -->
+<div class="goal-box">
+  <h2>🎯 What Is This Project Trying to Do — In One Sentence?</h2>
+  <p>Imagine underground water is stored in rocks beneath your feet. This project wants to <strong>predict which areas of Bangalore, Ramanagara, and Mandya will run out of underground water</strong> in the next 10–25 years — and warn people <em>before</em> it is too late.</p>
+  <span class="goal-highlight">🔮 We are building an AI-powered early warning system for underground water.</span>
+</div>
+
+<!-- THE BIG ANALOGY -->
+<div class="analogy-wrap">
+  <div class="analogy-card">
+    <div class="analogy-icon">🏦</div>
+    <div>
+      <h3>Think of underground water like a bank account</h3>
+      <p>Rain is the <strong>income</strong> (money coming in). Borewells, farming, and city taps are the <strong>withdrawals</strong> (money going out). In Bangalore right now, people are withdrawing <strong>9.4 times more than what comes in</strong>. The account is emptying. This project builds a system that tells you: <em>"At this rate, your account will hit zero by 2038."</em> — and shows you where to dig a recharge well to refill it.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ═══════════════════════════════════ -->
+<!-- PART 1: THE DATA WE NEED           -->
+<!-- ═══════════════════════════════════ -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-num" style="background:#2563EB;">1</div>
+    <div>
+      <h2>The Data We Need — and Why</h2>
+      <p>Think of each data type as a clue we're collecting to solve a mystery: "Where is the water going?"</p>
+    </div>
+  </div>
+
+  <!-- 1.1 GW LEVELS -->
+  <div class="ecard">
+    <div class="ecard-head">
+      <div class="ecard-emoji">📏</div>
+      <div>
+        <div class="ecard-title">Historical Groundwater Levels (2014–2024)</div>
+        <div class="ecard-subtitle">10 years of measurements from 1,767 wells across Karnataka</div>
+      </div>
+      <div class="ecard-badge b-must">Must Have</div>
+    </div>
+    <div class="ecard-body">
+      <div class="wwh">
+        <div class="wwh-box bx-what">
+          <div class="wwh-lbl">🔷 What is it?</div>
+          <div class="wwh-txt">Scientists have been measuring how deep the water is underground at thousands of wells across Karnataka — twice a year, every year since 2014. Think of it like measuring how full a well is every six months.</div>
+        </div>
+        <div class="wwh-box bx-why">
+          <div class="wwh-lbl">🟢 Why do we need it?</div>
+          <div class="wwh-txt">This is the <strong>answer sheet</strong> our AI learns from. It sees 10 years of "the water was at this depth in June, and then this depth in November" — and learns the pattern. Without this, the AI has nothing to learn from.</div>
+        </div>
+        <div class="wwh-box bx-how">
+          <div class="wwh-lbl">🟣 How do we get it?</div>
+          <div class="wwh-txt">We download it for free from the <strong>CGWB government website</strong> (Central Ground Water Board). They publish a report every 6 months with all well depths for all districts.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.2 RAINFALL -->
+  <div class="ecard">
+    <div class="ecard-head">
+      <div class="ecard-emoji">🌧️</div>
+      <div>
+        <div class="ecard-title">Daily Rainfall Data</div>
+        <div class="ecard-subtitle">Grid-based daily rain measurements covering the entire region</div>
+      </div>
+      <div class="ecard-badge b-must">Must Have</div>
+    </div>
+    <div class="ecard-body">
+      <div class="wwh">
+        <div class="wwh-box bx-what">
+          <div class="wwh-lbl">🔷 What is it?</div>
+          <div class="wwh-txt">India's weather department (IMD) has divided the country into small 28km × 28km boxes. They measure how much rain fell in each box <strong>every single day</strong>. We use this for our three districts.</div>
+        </div>
+        <div class="wwh-box bx-why">
+          <div class="wwh-lbl">🟢 Why do we need it?</div>
+          <div class="wwh-txt">Here is the key fact: In our rocky region, <strong>70–80% of all underground water refilling happens in just 2–5 heavy rain storms per year</strong>. If we only use monthly rainfall totals, we miss these critical moments. We need daily data to catch those big storms.</div>
+        </div>
+        <div class="wwh-box bx-how">
+          <div class="wwh-lbl">🟣 How do we get it?</div>
+          <div class="wwh-txt">Downloaded from <strong>IMD Pune's official website</strong> — the same place the weather forecast comes from. Over 100 years of daily data is available for free.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.3 KRS RESERVOIR -->
+  <div class="ecard">
+    <div class="ecard-head">
+      <div class="ecard-emoji">🏞️</div>
+      <div>
+        <div class="ecard-title">KRS Reservoir Water Level</div>
+        <div class="ecard-subtitle">Daily water storage data from Krishna Raja Sagar Dam, Mandya</div>
+      </div>
+      <div class="ecard-badge b-ext">Extreme for Mandya</div>
+    </div>
+    <div class="ecard-body">
+      <div class="wwh">
+        <div class="wwh-box bx-what">
+          <div class="wwh-lbl">🔷 What is it?</div>
+          <div class="wwh-txt">KRS Dam is the big dam on the Cauvery River in Mandya. Every day, the government records exactly how much water is stored in it — like checking how full your water tank is.</div>
+        </div>
+        <div class="wwh-box bx-why">
+          <div class="wwh-lbl">🟢 Why do we need it?</div>
+          <div class="wwh-txt">The canals from KRS Dam carry water through Mandya's farms. As the water flows through the canals and into the soil, some of it seeps underground and <strong>refills the aquifer</strong>. When KRS is low, this seepage stops — and underground water in Mandya directly falls. The dam level is a <strong>direct remote control</strong> for Mandya's groundwater.</div>
+        </div>
+        <div class="wwh-box bx-how">
+          <div class="wwh-lbl">🟣 How do we get it?</div>
+          <div class="wwh-txt">Downloaded daily from the <strong>Central Water Commission (CWC)</strong> — India's official river and dam monitoring authority.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.4 TEMPERATURE & ET -->
+  <div class="ecard">
+    <div class="ecard-head">
+      <div class="ecard-emoji">🌡️</div>
+      <div>
+        <div class="ecard-title">Temperature & Evapotranspiration (ET)</div>
+        <div class="ecard-subtitle">How hot is it? And how much water is evaporating?</div>
+      </div>
+      <div class="ecard-badge b-high">High Priority</div>
+    </div>
+    <div class="ecard-body">
+      <div class="wwh">
+        <div class="wwh-box bx-what">
+          <div class="wwh-lbl">🔷 What is it?</div>
+          <div class="wwh-txt"><strong>Temperature</strong> is straightforward — how hot the weather is. <strong>Evapotranspiration</strong> (ET) is a fancy word for: how much water is being sucked up from the soil and plants into the air due to heat. Like how a puddle dries up faster on a hot day.</div>
+        </div>
+        <div class="wwh-box bx-why">
+          <div class="wwh-lbl">🟢 Why do we need it?</div>
+          <div class="wwh-txt">When it gets hotter, more rain evaporates before it can soak underground. Studies show every <strong>1°C rise in temperature</strong> causes an extra 8 cm of underground water to disappear per year. This is why climate change is making the situation worse even when rainfall amount doesn't change.</div>
+        </div>
+        <div class="wwh-box bx-how">
+          <div class="wwh-lbl">🟣 How do we get it?</div>
+          <div class="wwh-txt">Temperature from <strong>IMD weather stations</strong>. ET is calculated using a standard formula (FAO Penman-Monteith) that combines temperature, humidity, wind, and sunlight into one "how much water evaporated today" number.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.5 SPECIFIC YIELD -->
+  <div class="ecard">
+    <div class="ecard-head">
+      <div class="ecard-emoji">🪨</div>
+      <div>
+        <div class="ecard-title">Specific Yield — How Much Water Can the Rock Hold?</div>
+        <div class="ecard-subtitle">The single most important property of Mandya's underground rock</div>
+      </div>
+      <div class="ecard-badge b-ext">Extreme Criticality</div>
+    </div>
+    <div class="ecard-body">
+      <div class="analogy-inline" style="background:#FEF3C7;border-left:4px solid #FDE68A;border-radius:0 8px 8px 0;padding:12px 16px;font-size:14px;margin:14px 0;line-height:1.6;">
+        <strong>🧽 Sponge vs Stone Analogy:</strong> A sponge holds a lot of water and releases it slowly when you squeeze. Mandya's underground rock is like stone — it barely holds any water at all (only 0.05% — that means from 1 litre of rock, only 0.5 mL is water!). So when farmers pump just a little bit from it, the water table drops dramatically — like squeezing a nearly dry stone.
+      </div>
+      <div class="wwh">
+        <div class="wwh-box bx-what">
+          <div class="wwh-lbl">🔷 What is it?</div>
+          <div class="wwh-txt">Specific Yield (Sy) measures what percentage of the underground rock is actually filled with usable water. Mandya's granite rock has Sy ≤ 0.05% — one of the lowest values in India.</div>
+        </div>
+        <div class="wwh-box bx-why">
+          <div class="wwh-lbl">🟢 Why do we need it?</div>
+          <div class="wwh-txt">It tells us HOW FAST the water table will drop when people pump. With such a tiny Sy, even pumping a small borewell in Mandya can cause a 10-metre drop in water table. This is why Mandya's "Day Zero" is so close — the rock can barely store water.</div>
+        </div>
+        <div class="wwh-box bx-how">
+          <div class="wwh-lbl">🟣 How do we get it?</div>
+          <div class="wwh-txt">From the <strong>CGWB NAQUIM report</strong> (a government aquifer mapping study) and a scientific model called AMBHAS-1D that was used specifically to map the Upper Cauvery Basin where Mandya lies.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.6 T AND K -->
+  <div class="ecard">
+    <div class="ecard-head">
+      <div class="ecard-emoji">💨</div>
+      <div>
+        <div class="ecard-title">Transmissivity & Hydraulic Conductivity — How Fast Does Water Flow Underground?</div>
+        <div class="ecard-subtitle">Measures the "speed limit" of water movement inside the rock</div>
+      </div>
+      <div class="ecard-badge b-high">High Priority</div>
+    </div>
+    <div class="ecard-body">
+      <div class="wwh">
+        <div class="wwh-box bx-what">
+          <div class="wwh-lbl">🔷 What is it?</div>
+          <div class="wwh-txt"><strong>Hydraulic Conductivity (K)</strong> = how easily water flows through rock (like how fast water drains through sand vs clay). <strong>Transmissivity (T)</strong> = how much water can flow through the full thickness of rock per day. In Bangalore South, it varies from 2 to 280 m²/day — a 140× difference!</div>
+        </div>
+        <div class="wwh-box bx-why">
+          <div class="wwh-lbl">🟢 Why do we need it?</div>
+          <div class="wwh-txt">Our computer simulation (MODFLOW) uses this to calculate exactly which direction water flows underground and how fast. Without this, the simulation would give wrong answers — like predicting water flows north when it actually flows south.</div>
+        </div>
+        <div class="wwh-box bx-how">
+          <div class="wwh-lbl">🟣 How do we get it?</div>
+          <div class="wwh-txt">From <strong>CGWB borewell pump test records</strong> — when engineers drill a test borewell, they pump it and measure how fast the water level drops. This drop speed tells us T and K for that location.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.7 LINEAMENT -->
+  <div class="ecard">
+    <div class="ecard-head">
+      <div class="ecard-emoji">🛰️</div>
+      <div>
+        <div class="ecard-title">Lineament Density — Finding Cracks in the Rock from Space</div>
+        <div class="ecard-subtitle">Satellite-detected fracture lines that act as underground water highways</div>
+      </div>
+      <div class="ecard-badge b-high">High Priority</div>
+    </div>
+    <div class="ecard-body">
+      <div class="wwh">
+        <div class="wwh-box bx-what">
+          <div class="wwh-lbl">🔷 What is it?</div>
+          <div class="wwh-txt">The hard granite rock below our region has millions of tiny cracks called <strong>fractures or lineaments</strong>. These cracks are like tiny tunnels where underground water travels and collects. Satellite images can detect these crack patterns from space because they show up as faint lines in the landscape.</div>
+        </div>
+        <div class="wwh-box bx-why">
+          <div class="wwh-lbl">🟢 Why do we need it?</div>
+          <div class="wwh-txt">In our region, there is almost NO water in the solid rock — <strong>all the water is in the cracks</strong>. So areas with more cracks = more water. This is the most important factor for finding good borewell locations and for mapping where water can flow underground.</div>
+        </div>
+        <div class="wwh-box bx-how">
+          <div class="wwh-lbl">🟣 How do we get it?</div>
+          <div class="wwh-txt">We download <strong>Landsat satellite images</strong> from USGS Earth Explorer (free) and use GIS software to trace the visible crack patterns. We then calculate how many cracks per square kilometre — that is the "lineament density" value.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.8 LULC -->
+  <div class="ecard">
+    <div class="ecard-head">
+      <div class="ecard-emoji">🏙️</div>
+      <div>
+        <div class="ecard-title">Land Use / Land Cover (LULC) — What is the Ground Made Of?</div>
+        <div class="ecard-subtitle">Are we looking at concrete, farms, forests, or water bodies?</div>
+      </div>
+      <div class="ecard-badge b-must">Must Have — Bangalore</div>
+    </div>
+    <div class="ecard-body">
+      <div class="analogy-inline" style="background:#FEF3C7;border-left:4px solid #FDE68A;border-radius:0 8px 8px 0;padding:12px 16px;font-size:14px;margin:14px 0;line-height:1.6;">
+        <strong>☔ Rain on Different Surfaces:</strong> When rain falls on a forest or park, it soaks into the ground. When it falls on concrete roads and buildings, it becomes runoff — flows into drains and is lost. Bangalore's green cover went from <strong>28% in 2010 to just 2.9% in 2023</strong>. That means nearly all rain now runs off without recharging underground water.
+      </div>
+      <div class="wwh">
+        <div class="wwh-box bx-what">
+          <div class="wwh-lbl">🔷 What is it?</div>
+          <div class="wwh-txt">A map showing what type of surface covers each area — buildings, roads, farmland, forest, lakes, or open land. Updated every year using satellite images.</div>
+        </div>
+        <div class="wwh-box bx-why">
+          <div class="wwh-lbl">🟢 Why do we need it?</div>
+          <div class="wwh-txt">It tells us <strong>where rain can soak into the ground</strong> (recharge zones) and where it cannot (concrete areas). Also needed to predict sugarcane farming areas in Mandya — sugarcane uses 1,500–2,000 mm of water per season, the highest of any crop.</div>
+        </div>
+        <div class="wwh-box bx-how">
+          <div class="wwh-lbl">🟣 How do we get it?</div>
+          <div class="wwh-txt">We use <strong>Sentinel-2 satellite images</strong> (free, updated every 5 days). Software colours each pixel based on what it sees — green = vegetation, grey = urban, blue = water. This process is called "image classification."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.9 DEM/TWI -->
+  <div class="ecard">
+    <div class="ecard-head">
+      <div class="ecard-emoji">⛰️</div>
+      <div>
+        <div class="ecard-title">Digital Elevation Model (DEM) — A 3D Map of the Land</div>
+        <div class="ecard-subtitle">Used to figure out where water naturally flows and collects</div>
+      </div>
+      <div class="ecard-badge b-med">Medium Priority</div>
+    </div>
+    <div class="ecard-body">
+      <div class="wwh">
+        <div class="wwh-box bx-what">
+          <div class="wwh-lbl">🔷 What is it?</div>
+          <div class="wwh-txt">A DEM is a <strong>digital 3D height map</strong> of the land surface — every 30m × 30m square on the map has an elevation value (how many metres above sea level). From this, we calculate: Slope (how steep?), TWI (how likely is water to collect here?), and Drainage Density (how many streams drain this area?).</div>
+        </div>
+        <div class="wwh-box bx-why">
+          <div class="wwh-lbl">🟢 Why do we need it?</div>
+          <div class="wwh-txt">Water always flows downhill. The DEM tells us where rain water will naturally collect and soak in versus where it will flow away. Low flat areas with high TWI values are <strong>natural recharge zones</strong> — ideal spots for building artificial recharge structures.</div>
+        </div>
+        <div class="wwh-box bx-how">
+          <div class="wwh-lbl">🟣 How do we get it?</div>
+          <div class="wwh-txt">Downloaded for free from <strong>NASA's SRTM mission</strong> — it mapped the entire Earth's elevation from a Space Shuttle. Resolution: one measurement every 30 metres.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.10 EXTRACTION RATES -->
+  <div class="ecard">
+    <div class="ecard-head">
+      <div class="ecard-emoji">🚰</div>
+      <div>
+        <div class="ecard-title">Groundwater Extraction Rates — How Much Are We Pumping?</div>
+        <div class="ecard-subtitle">The amount of water being taken out by borewells every day</div>
+      </div>
+      <div class="ecard-badge b-must">Must Have</div>
+    </div>
+    <div class="ecard-body">
+      <div class="wwh">
+        <div class="wwh-box bx-what">
+          <div class="wwh-lbl">🔷 What is it?</div>
+          <div class="wwh-txt">Total amount of underground water pumped out by all borewells across each taluk — for city supply, farming, industries, and households. Bangalore went from 600 MLD (million litres per day) in 2020 to <strong>1,457 MLD in 2024</strong>. That is 2.4 times increase in just 4 years.</div>
+        </div>
+        <div class="wwh-box bx-why">
+          <div class="wwh-lbl">🟢 Why do we need it?</div>
+          <div class="wwh-txt">This is the "withdrawal" from our bank account. Without knowing how much is being taken out, we cannot calculate when the account hits zero. It is the primary driver of "Day Zero" predictions.</div>
+        </div>
+        <div class="wwh-box bx-how">
+          <div class="wwh-lbl">🟣 How do we get it?</div>
+          <div class="wwh-txt">From the <strong>Karnataka Groundwater Directorate's Antharjala portal</strong> — they publish taluk-level annual extraction vs recharge estimates. Also from the OpenCity research dashboard for Bengaluru.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.11 CLIMATE SCENARIOS -->
+  <div class="ecard">
+    <div class="ecard-head">
+      <div class="ecard-emoji">🌍</div>
+      <div>
+        <div class="ecard-title">Climate Change Scenarios (RCP 4.5 & RCP 8.5) — What Happens in the Future?</div>
+        <div class="ecard-subtitle">Two possible futures: moderate warming vs extreme warming</div>
+      </div>
+      <div class="ecard-badge b-must">Must Have — Phase 4</div>
+    </div>
+    <div class="ecard-body">
+      <div class="analogy-inline" style="background:#FEF3C7;border-left:4px solid #FDE68A;border-radius:0 8px 8px 0;padding:12px 16px;font-size:14px;margin:14px 0;line-height:1.6;">
+        <strong>📅 Two Future Stories:</strong> Scientists around the world have created two "what if" stories for the future. <strong>RCP 4.5</strong> = "Moderate" — humans reduce carbon emissions a bit. <strong>RCP 8.5</strong> = "Worst Case" — humans keep burning fossil fuels at the current rate. We run our model in both futures to see how bad groundwater stress gets in each.
+      </div>
+      <div class="wwh">
+        <div class="wwh-box bx-what">
+          <div class="wwh-lbl">🔷 What is it?</div>
+          <div class="wwh-txt">Projections from global climate models (CMIP6) that predict future rainfall, temperature, and evaporation for South India from 2025 to 2050. "RCP" stands for how much heat-trapping gas humans are emitting — 4.5 is moderate, 8.5 is severe.</div>
+        </div>
+        <div class="wwh-box bx-why">
+          <div class="wwh-lbl">🟢 Why do we need it?</div>
+          <div class="wwh-txt">To answer the question: "Even if extraction stays the same, will there be less rain and more evaporation in 2040?" Yes — and under RCP 8.5, high potential groundwater zones could <strong>shrink by 15–22% by 2040</strong>. This is Phase 4 of the project.</div>
+        </div>
+        <div class="wwh-box bx-how">
+          <div class="wwh-lbl">🟣 How do we get it?</div>
+          <div class="wwh-txt">Downloaded from <strong>CORDEX South Asia</strong> — a project where climate scientists have taken global models and zoomed into South Asia to get localised future climate data at 25km resolution.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /section -->
+
+<hr class="div">
+
+<!-- ═══════════════════════════════════ -->
+<!-- PART 2: THE 5-STEP PROCESS        -->
+<!-- ═══════════════════════════════════ -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-num" style="background:#16A34A;">2</div>
+    <div>
+      <h2>The 5-Step Process — From Raw Data to Final Prediction</h2>
+      <p>Here is how all that data gets turned into a map showing which areas will run out of water</p>
+    </div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="pstep">
+    <div class="pnum" style="background:#2563EB;">1</div>
+    <div class="pcard">
+      <h3 style="color:#2563EB;">🗂️ Step 1: Data Collection & Cleaning</h3>
+      <div class="plain">First, we go and <strong>gather all the data</strong> from the sources explained above — government websites, satellite portals, dam authorities. This is like gathering all the ingredients before you start cooking.</div>
+      <div class="analogy-inline"><strong>🍳 Cooking analogy:</strong> Before you cook, you gather onions, tomatoes, spices. Here, we gather rainfall CSVs, borewell depth Excel files, satellite images, and reservoir level PDFs from various government portals.</div>
+      <div class="mini-steps">
+        <div class="mini-step"><div class="mini-ico">📥</div><div>Download CGWB pre- and post-monsoon bulletins for all 3 districts (2014–2024)</div></div>
+        <div class="mini-step"><div class="mini-ico">🌧️</div><div>Download IMD daily gridded rainfall files for the region</div></div>
+        <div class="mini-step"><div class="mini-ico">🛰️</div><div>Download Landsat / Sentinel satellite images from USGS Earth Explorer</div></div>
+        <div class="mini-step"><div class="mini-ico">🧹</div><div><strong>Clean the data:</strong> Remove duplicate entries, fill in missing months using averages, convert all units to the same format (e.g., all depths in metres)</div></div>
+        <div class="mini-step"><div class="mini-ico">📊</div><div>Organise everything into a structured table: one row per month per well, with all variables as columns</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="pstep">
+    <div class="pnum" style="background:#7C3AED;">2</div>
+    <div class="pcard">
+      <h3 style="color:#7C3AED;">🤖 Step 2: Teaching the AI (LSTM Model Training)</h3>
+      <div class="plain">Now we <strong>teach a special type of AI</strong> — called LSTM — to recognise patterns in the data. It learns: "When rainfall is high in August AND the previous month's water level was at 12m, then the water level in September is usually 10m."</div>
+      <div class="analogy-inline"><strong>🧠 Learning analogy:</strong> LSTM is like a student who studies 10 years of exam results and notices patterns — "Whenever it rained heavily in June AND the dam was full, groundwater recovered by November." It then uses these patterns to predict the future. The "Long Short-Term Memory" part means it can remember what happened 3–6 months ago, not just last month.</div>
+      <div class="mini-steps">
+        <div class="mini-step"><div class="mini-ico">📚</div><div><strong>Training:</strong> Feed the AI data from 2014–2021 (7 years). It sees thousands of examples of "these inputs led to this groundwater level"</div></div>
+        <div class="mini-step"><div class="mini-ico">✅</div><div><strong>Validation:</strong> Test it on 2022–2023 data it has NEVER seen. If it predicts correctly, it has learned the right patterns</div></div>
+        <div class="mini-step"><div class="mini-ico">🎯</div><div><strong>Testing:</strong> Final check on 2024 data. We measure accuracy using R² (how well predictions match reality — 0.95+ means 95% accurate)</div></div>
+        <div class="mini-step"><div class="mini-ico">🔮</div><div><strong>Output:</strong> The trained AI can now predict groundwater levels 12 months into the future for any well in our 3 districts</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="pstep">
+    <div class="pnum" style="background:#EA580C;">3</div>
+    <div class="pcard">
+      <h3 style="color:#EA580C;">🏗️ Step 3: Underground Water Flow Simulation (MODFLOW)</h3>
+      <div class="plain">The AI predictions tell us water levels at specific wells. But we need to know <strong>what is happening between the wells</strong> — how is water flowing underground? For this, we use a physics-based computer simulation called MODFLOW.</div>
+      <div class="analogy-inline"><strong>🗺️ GPS map analogy:</strong> The LSTM gives us the water level at specific points — like a GPS giving you coordinates. MODFLOW fills in the map between those points — like how Google Maps draws all the roads and terrain between two GPS points. It simulates the entire underground as a 3D grid and calculates water movement in every single 1km × 1km cell.</div>
+      <div class="mini-steps">
+        <div class="mini-step"><div class="mini-ico">📐</div><div><strong>Build the model:</strong> Divide the 9,200 km² study area into a grid. Each 1km × 1km cell has two layers — shallow weathered zone (0–30m) and deeper fractured zone (30–250m)</div></div>
+        <div class="mini-step"><div class="mini-ico">⚙️</div><div><strong>Set parameters:</strong> Assign each cell its rock properties — Specific Yield, Hydraulic Conductivity, Transmissivity — from the geological data we collected</div></div>
+        <div class="mini-step"><div class="mini-ico">💧</div><div><strong>Set boundaries:</strong> Tell the model where water enters (rain recharge, canal seepage from KRS) and where it exits (pumping borewells, river flow)</div></div>
+        <div class="mini-step"><div class="mini-ico">🎛️</div><div><strong>Calibrate:</strong> Run the simulation and compare its output to the actual measured well levels. Adjust parameters until the simulation matches reality (target: R² ≈ 0.95)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="pstep">
+    <div class="pnum" style="background:#0891B2;">4</div>
+    <div class="pcard">
+      <h3 style="color:#0891B2;">🗺️ Step 4: Making the Vulnerability Map</h3>
+      <div class="plain">Now we combine all the GIS layers (satellite data, geology, slopes, cracks) with our AI predictions to create a <strong>colour-coded map</strong> showing which areas are most at risk of running out of groundwater.</div>
+      <div class="analogy-inline"><strong>🚦 Traffic light analogy:</strong> Just like a map shows traffic as green (free), yellow (slow), red (jam) — our vulnerability map shows groundwater zones as green (safe), yellow (warning), red (critical danger zone). Areas that appear red need urgent intervention — like building a recharge pond or reducing borewell usage.</div>
+      <div class="mini-steps">
+        <div class="mini-step"><div class="mini-ico">📡</div><div><strong>Prepare 14 GIS layers:</strong> Geology, lineament density, LULC, slope, TWI, drainage density, NDVI, extraction rates, soil type, rainfall, depth to water table, annual decline rate</div></div>
+        <div class="mini-step"><div class="mini-ico">🌲</div><div><strong>Run LightGBM / Random Forest:</strong> These are AI algorithms that combine all 14 layers to score every location — "How vulnerable is this 1km cell to running dry?" They achieve >90% accuracy</div></div>
+        <div class="mini-step"><div class="mini-ico">🗾</div><div><strong>Kriging interpolation:</strong> This is a mathematical technique that smoothly fills in the gaps between our prediction points to create a continuous map surface (like how weather maps show smooth rainfall patterns, not just dots)</div></div>
+        <div class="mini-step"><div class="mini-ico">🏷️</div><div><strong>Output:</strong> A map of all 3 districts divided into Very High / High / Moderate / Low risk zones for groundwater depletion</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="pstep">
+    <div class="pnum" style="background:#DC2626;">5</div>
+    <div class="pcard">
+      <h3 style="color:#DC2626;">🌍 Step 5: Future Scenario Prediction ("Day Zero" Mapping)</h3>
+      <div class="plain">Finally, we <strong>run the whole model into the future</strong> (2025–2050) using the climate change projections. This tells us WHEN and WHERE groundwater will hit critical levels — the so-called "Day Zero" — when the water in the shallow aquifer is essentially gone.</div>
+      <div class="analogy-inline"><strong>📉 Stock market analogy:</strong> Imagine a stock that is falling. A financial analyst runs two scenarios: "If the economy improves moderately (RCP 4.5), the stock stabilises by 2035. But if the recession worsens (RCP 8.5), the stock crashes by 2038." We do the same for groundwater — running both moderate and worst-case climate futures to show when each taluk hits "Day Zero."</div>
+      <div class="mini-steps">
+        <div class="mini-step"><div class="mini-ico">🌡️</div><div><strong>Feed future climate into the model:</strong> Replace historical rainfall and temperature with the CMIP6/CORDEX future projections for 2025–2050</div></div>
+        <div class="mini-step"><div class="mini-ico">📈</div><div><strong>Project extraction growth:</strong> Assume Bangalore's population keeps growing at 3.5%/year and extraction increases proportionally</div></div>
+        <div class="mini-step"><div class="mini-ico">📅</div><div><strong>Identify "Day Zero" taluk-by-taluk:</strong> Which taluks hit critically low groundwater levels first? (e.g., Nagamangala in Mandya and Bangalore South are likely earliest)</div></div>
+        <div class="mini-step"><div class="mini-ico">✅</div><div><strong>Test solutions:</strong> Run "What if we build 500 recharge ponds in Mandya?" and "What if Bangalore reduces extraction by 20%?" — and show how much each intervention delays Day Zero</div></div>
+      </div>
+      <div class="flow" style="margin-top:18px;">
+        <div class="fstep">Climate Data 2025–2050</div><div class="farr">→</div>
+        <div class="fstep">LSTM + MODFLOW</div><div class="farr">→</div>
+        <div class="fstep">Future GW Levels</div><div class="farr">→</div>
+        <div class="fstep">Day Zero Map</div><div class="farr">→</div>
+        <div class="fstep">DSS Dashboard</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /section -->
+
+<hr class="div">
+
+<!-- OUTPUTS -->
+<div class="section" style="padding-bottom:12px;">
+  <div class="sec-head">
+    <div class="sec-num" style="background:#D97706;">3</div>
+    <div>
+      <h2>What Does the Final System Show?</h2>
+      <p>The deliverable — what farmers, officials, and policymakers can see on the dashboard</p>
+    </div>
+  </div>
+</div>
+<div class="out-grid">
+  <div class="out-card" style="border-color:#BFDBFE;">
+    <div class="out-icon">🗺️</div>
+    <h3 style="color:#2563EB;">Vulnerability Zone Map</h3>
+    <p>A colour-coded map of all 3 districts showing which areas are safest (green) and which are in crisis (red) — updated monthly with new data.</p>
+  </div>
+  <div class="out-card" style="border-color:#FEE2E2;">
+    <div class="out-icon">📅</div>
+    <h3 style="color:#DC2626;">"Day Zero" Timeline</h3>
+    <p>A timeline for each taluk showing when underground water will hit critically low levels — like a battery percentage indicator for groundwater.</p>
+  </div>
+  <div class="out-card" style="border-color:#DCFCE7;">
+    <div class="out-icon">💡</div>
+    <h3 style="color:#16A34A;">Recharge Site Recommendations</h3>
+    <p>A map showing the best locations to build recharge structures (check dams, percolation ponds) to refill the aquifer — ranked by impact.</p>
+  </div>
+  <div class="out-card" style="border-color:#FEF3C7;">
+    <div class="out-icon">🌡️</div>
+    <h3 style="color:#D97706;">Climate Scenario Comparison</h3>
+    <p>Side-by-side view of "moderate warming future" vs "worst case warming future" for groundwater — showing how much worse things get with more climate change.</p>
+  </div>
+  <div class="out-card" style="border-color:#EDE9FE;">
+    <div class="out-icon">🚿</div>
+    <h3 style="color:#7C3AED;">KRS Reservoir Impact Alerts</h3>
+    <p>For Mandya: if KRS storage drops below a threshold, the system automatically warns — "Groundwater in Nagamangala taluk will drop by 4m this season."</p>
+  </div>
+  <div class="out-card" style="border-color:#CFFAFE;">
+    <div class="out-icon">👩‍🌾</div>
+    <h3 style="color:#0891B2;">Stakeholder Views</h3>
+    <p>Different dashboards for different users: Farmers see irrigation planning advice. Water officials see taluk-level extraction limits. Policymakers see district-level intervention budgets.</p>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- GLOSSARY -->
+<div class="glossary">
+  <h2>📖 Glossary of Terms</h2>
+  <p class="gl-sub">Every technical word used in this project, explained in plain language</p>
+  <div class="gl-grid">
+    <div class="gterm"><div class="gword">Aquifer</div><div class="gdef">The underground layer of rock that holds water — like a natural underground tank. Our project focuses on the "shallow aquifer" which is the top 0–30 metres of weathered rock.</div></div>
+    <div class="gterm"><div class="gword">Groundwater Level (GWL)</div><div class="gdef">How deep you have to dig or drill before you hit water. If GWL is 15m, you need to go 15 metres underground to find water. Higher GWL = closer to surface = good. Deeper = bad.</div></div>
+    <div class="gterm"><div class="gword">LSTM (Long Short-Term Memory)</div><div class="gdef">A type of AI that is good at learning from sequences of data over time. Like how you can predict tomorrow's weather better if you know the last 7 days, not just today. LSTM "remembers" 3–6 months of past patterns.</div></div>
+    <div class="gterm"><div class="gword">MODFLOW</div><div class="gdef">A free software made by the US Geological Survey that simulates how water flows underground in 3D — like a flight simulator but for groundwater. Used worldwide by hydrogeologists.</div></div>
+    <div class="gterm"><div class="gword">Specific Yield (Sy)</div><div class="gdef">The percentage of rock volume that is actually available water. Mandya's rock has Sy ≤ 0.05% — only 0.5 mL of water per litre of rock. This is why it depletes so fast.</div></div>
+    <div class="gterm"><div class="gword">Transmissivity (T)</div><div class="gdef">How easily water flows horizontally through rock — measured in m²/day. High T = water flows fast (like a river in rock). Low T = water barely moves. Bangalore South varies from 2 to 280 m²/day.</div></div>
+    <div class="gterm"><div class="gword">Recharge</div><div class="gdef">The natural process where rainwater soaks into the ground and refills the underground water supply. Like topping up a tank. In our region, 70–80% of recharge happens during just 2–5 big rain storms each year.</div></div>
+    <div class="gterm"><div class="gword">Evapotranspiration (ET)</div><div class="gdef">Water that evaporates from soil and transpires from plant leaves into the air — "lost" water that never reaches the underground aquifer. Increases with temperature and is a key reason climate change reduces groundwater recharge.</div></div>
+    <div class="gterm"><div class="gword">Lineament Density</div><div class="gdef">The number of rock fractures (cracks) visible per square kilometre from satellite images. In hard-rock areas like ours, these fractures are the main pathways where groundwater flows and collects.</div></div>
+    <div class="gterm"><div class="gword">LULC (Land Use / Land Cover)</div><div class="gdef">A map showing what the ground is covered with — buildings, roads, farms, forests, or water. Crucial for knowing where rain can soak in (forests, parks) vs where it runs off (concrete, roads).</div></div>
+    <div class="gterm"><div class="gword">TWI (Topographic Wetness Index)</div><div class="gdef">A number calculated from the landscape shape — how much water is likely to naturally accumulate in this spot. High TWI = natural water collecting zone = good recharge area. Calculated from DEM data.</div></div>
+    <div class="gterm"><div class="gword">DEM (Digital Elevation Model)</div><div class="gdef">A 3D digital map of the land surface height. Every 30m × 30m square has an elevation value. Used to calculate slope, drainage paths, and TWI. Downloaded free from NASA's SRTM mission data.</div></div>
+    <div class="gterm"><div class="gword">CGWB</div><div class="gdef">Central Ground Water Board — India's government agency that monitors groundwater levels at 1,767 wells across Karnataka. Publishes free reports every 6 months. Our primary data source.</div></div>
+    <div class="gterm"><div class="gword">RCP 4.5 / RCP 8.5</div><div class="gdef">Two future climate scenarios. RCP 4.5 = moderate warming (humans reduce emissions). RCP 8.5 = severe warming (business as usual). We run our model in both futures to see the range of possible outcomes by 2050.</div></div>
+    <div class="gterm"><div class="gword">CMIP6 / CORDEX</div><div class="gdef">International projects where climate scientists pool their models to create standardised future climate projections. CORDEX zooms into South Asia specifically. We use their data for Phase 4 climate scenario analysis.</div></div>
+    <div class="gterm"><div class="gword">LightGBM / Random Forest</div><div class="gdef">Types of AI algorithms particularly good at combining many different variables (our 14 GIS layers) to make predictions. Like having 500 different analysts each look at the data, then voting on the final answer — that is what Random Forest does.</div></div>
+    <div class="gterm"><div class="gword">Kriging / EBK</div><div class="gdef">A mathematical technique for filling in a map between known data points. If we know groundwater levels at 50 wells, Kriging estimates what the level would be at every location between them — creating a smooth continuous map.</div></div>
+    <div class="gterm"><div class="gword">Day Zero</div><div class="gdef">The day when an area's groundwater hits critically low levels — meaning borewells stop yielding water. Like Cape Town in 2018 almost running out of reservoir water. Our project predicts which taluks will hit Day Zero first and when.</div></div>
+    <div class="gterm"><div class="gword">MAR (Managed Aquifer Recharge)</div><div class="gdef">Deliberately refilling underground water by building structures that help rain soak in faster — check dams, percolation ponds, borewell recharge pits. Our DSS recommends the best locations for MAR in the 3 districts.</div></div>
+    <div class="gterm"><div class="gword">DSS (Decision Support System)</div><div class="gdef">Our final web dashboard that presents all predictions in a user-friendly interface. Different views for farmers, water managers, and policymakers — so each group gets the information relevant to their decisions.</div></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>BMS College of Engineering</strong> · Department of Information Science & Engineering · Capstone Project 2025–26 · Batch 6 · Guide: Dr. Roopa R
+</div>
+
+</body>
+</html>
